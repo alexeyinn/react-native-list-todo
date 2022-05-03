@@ -10,7 +10,9 @@ export const Navbar = () => {
 
 const styles = StyleSheet.create({
   navbar: {
-    height: Platform.OS === "ios" ? 70 : 35,
+    // В данном случае, не стоит менять px на %,
+    // при появлении экранной клавиатуры, поплывет верстка.
+    height: Platform.OS === "ios" ? 70 : 55,
     alignItems: "center",
     justifyContent: "flex-end",
     backgroundColor: "#3949ab",

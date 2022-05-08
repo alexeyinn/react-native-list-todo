@@ -1,14 +1,27 @@
 import { useState } from "react";
-import { Button, TextInput, View, StyleSheet, Text } from "react-native";
+import { Button, TextInput, View, StyleSheet, Text, Alert } from "react-native";
 
 export const AddTodo = () => {
   const [todos, setTodos] = useState<string[]>([]);
-  const pressed = () => setTodos([...todos, "check"]);
+  const [inputValue, setInputValue] = useState<string>("");
+  const pressed = () => {
+    if (inputValue.trim()) {
+      setTodos([...todos, inputValue.trim()]);
+      setInputValue("");
+    } else {
+      Alert.alert("Название дела, не может быть пустым!");
+    }
+  };
 
   return (
     <View style={styles.block}>
       <View style={styles.inputView}>
-        <TextInput style={styles.input} />
+        <TextInput
+          style={styles.input}
+          placeholder="Введите название вашего дела..."
+          onChangeText={setInputValue}
+          value={inputValue}
+        />
         <Button title="Добавить" onPress={pressed} />
       </View>
       {todos.map((item, index) => (

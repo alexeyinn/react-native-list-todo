@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { Navbar } from "./src/components/Navbar";
 import { AddTodo } from "./src/components/AddTodo";
-// 2:05:00
+// 2:27:00
 export default function App() {
   return (
     <View>

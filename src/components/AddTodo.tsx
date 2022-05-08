@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { Button, TextInput, View, StyleSheet, Text, Alert } from "react-native";
+import {
+  Button,
+  TextInput,
+  View,
+  StyleSheet,
+  Text,
+  Alert,
+  FlatList,
+} from "react-native";
 
 export const AddTodo = () => {
   const [todos, setTodos] = useState<string[]>([]);
@@ -24,11 +32,12 @@ export const AddTodo = () => {
         />
         <Button title="Добавить" onPress={pressed} />
       </View>
-      {todos.map((item, index) => (
-        <Text style={styles.todo} key={index}>
-          {item}
-        </Text>
-      ))}
+      <FlatList
+        keyExtractor={(item, index) => index.toString()}
+        data={todos}
+        renderItem={({ item }) => <Text style={styles.todo}>{item}</Text>}
+        style={styles.flatList}
+      />
     </View>
   );
 };
@@ -58,5 +67,8 @@ const styles = StyleSheet.create({
     borderColor: "#eee",
     borderRadius: 5,
     marginBottom: 10,
+  },
+  flatList: {
+    maxHeight: "90%",
   },
 });

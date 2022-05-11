@@ -7,14 +7,21 @@ import {
   Text,
   Alert,
   FlatList,
+  TouchableOpacity,
 } from "react-native";
 
+interface ITodo {
+  id: number;
+  title: string;
+}
+
 export const AddTodo = () => {
-  const [todos, setTodos] = useState<string[]>([]);
+  const [todos, setTodos] = useState<ITodo[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
+
   const pressed = () => {
     if (inputValue.trim()) {
-      setTodos([...todos, inputValue.trim()]);
+      setTodos([...todos, { id: +new Date(), title: inputValue.trim() }]);
       setInputValue("");
     } else {
       Alert.alert("Название дела, не может быть пустым!");
@@ -35,7 +42,15 @@ export const AddTodo = () => {
       <FlatList
         keyExtractor={(item, index) => index.toString()}
         data={todos}
-        renderItem={({ item }) => <Text style={styles.todo}>{item}</Text>}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onLongPress={() =>
+              setTodos((prev) => prev.filter((todo) => todo.id !== item.id))
+            }
+          >
+            <Text style={styles.todo}>{item.title}</Text>
+          </TouchableOpacity>
+        )}
         style={styles.flatList}
       />
     </View>
